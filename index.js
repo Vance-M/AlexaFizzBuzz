@@ -1,6 +1,6 @@
 
 const count = 1
-const fizzBuzz = (count) => {
+export function fizzBuzz(count) {
     if(count % 3 === 0 && count % 5 === 0){
         return ('fizzbuzz');
     } else if (count % 5 === 0){
@@ -11,5 +11,3 @@ const fizzBuzz = (count) => {
         return (count)
     }
 }
-
-export default fizzBuzz
