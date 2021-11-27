@@ -11,4 +11,12 @@ export function fizzBuzz(count) {
         return (count)
     }
 }
-// this is a new test line
+
+
+exports.handler = async (event) => {
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify('Hello from the github side'),
+    }
+    return response
+}
