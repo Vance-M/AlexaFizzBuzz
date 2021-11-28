@@ -1,7 +1,5 @@
 const Alexa = require('ask-sdk-core');
 
-const count = 1
-
 function fizzBuzz(count) {
     if(count % 3 === 0 && count % 5 === 0){
         return ('fizzbuzz');
@@ -19,12 +17,20 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Welcome, you can say Hello or Help. Which would you like to try?';
-
+        const sessionAtt = handlerInput.attributesManager.getSessionAttributes();
+        const count = 1
+        const speakOutput = 'Welcome to Fizz Buzz. \
+            We take turns counting but with a couple extra rules. \
+            Any number divisible by 3 is replaced by the word Fizz. \
+            Any number divisible by 5 is replaced by the word Buzz. \
+            If a number is divisible both by 3 and by 5 then you replace is with FizzBuzz';
+        sessionAtt.count = count
+        handlerInput.attributesManager.setSessionAttributes(sessionAtt);
         return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .reprompt(speakOutput)
-            .getResponse();
+        .speak(speakOutput + 'I\'ll start.' + fizzBuzz(count).toString(); )
+        .reprompt(speakOutput + 'The count is' + fizzBuzz(count).toString();)
+        .getResponse();
+        
     }
 };
 
@@ -48,22 +54,6 @@ const HelpIntentHandler = {
     }
 };
 
-
-// const FallbackIntentHandler = {
-//     canHandle(handlerInput) {
-//         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-//             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.FallbackIntent';
-//     },
-//     handle(handlerInput) {
-//         const speakOutput = 'Sorry, I don\'t know about that. Please try again.';
-
-//         return handlerInput.responseBuilder
-//             .speak(speakOutput)
-//             .reprompt(speakOutput)
-//             .getResponse();
-//     }
-// };
-
 const CancelAndStopIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
@@ -84,9 +74,9 @@ const SessionEndedRequestHandler = {
     },
     handle(handlerInput) {
         console.log(`~~~~ Session ended: ${JSON.stringify(handlerInput.requestEnvelope)}`);
-        // const sessionAtt = handlerInput.attributesManager.getSessionAttributes();
-        // sessionAtt = null; // Clear session
-        // handlerInput.attributesManager.setSessionAttributes(sessionAtt);
+        const sessionAtt = handlerInput.attributesManager.getSessionAttributes();
+        sessionAtt = null; // Clear session
+        handlerInput.attributesManager.setSessionAttributes(sessionAtt);
         return handlerInput.responseBuilder.speak('Goodbye!');
     }
 };
