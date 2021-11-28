@@ -28,4 +28,3 @@ jobs:
         run: |
           zip -j deploy.zip ./*
           aws lambda update-function-code --function-name=FizzBuzz --zip-file=fileb://deploy.zip
-
