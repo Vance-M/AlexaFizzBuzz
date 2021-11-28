@@ -82,9 +82,10 @@ const SessionEndedRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'SessionEndedRequest';
     },
     handle(handlerInput) {
-        const sessionAtt = handlerInput.attributesManager.getSessionAttributes();
-        sessionAtt = null; // Clear session
-        handlerInput.attributesManager.setSessionAttributes(sessionAtt);
+        console.log(`~~~~ Session ended: ${JSON.stringify(handlerInput.requestEnvelope)}`);
+        // const sessionAtt = handlerInput.attributesManager.getSessionAttributes();
+        // sessionAtt = null; // Clear session
+        // handlerInput.attributesManager.setSessionAttributes(sessionAtt);
         return handlerInput.responseBuilder.speak('Goodbye!');
     }
 };
