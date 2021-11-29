@@ -41,7 +41,7 @@ const GameIntentHandler = {
             const userNumber = parseInt(Alexa.getSlotValue(handlerInput.requestEnvelope, 'number'), 10)
             const userString = Alexa.getSlotValue(handlerInput.requestEnvelope, 'fizzbuzz')
             count++;
-            if((userNumber === fizzBuzz(count)) || (userString === fizzBuzz(count))){
+            if((userNumber === fizzBuzz(count)) || userString == fizzBuzz(count)){
                 count++;
                 sessionAtt.count = count
                 handlerInput.attributesManager.setSessionAttributes(sessionAtt);
