@@ -71,11 +71,11 @@ const RepeatIntentHandler = {
     handle(handleInput) {
         let sessionAtt = handlerInput.attributesManager.getSessionAttributes();
         if(sessionAtt.repeat != null){
-            return sessionAtt.repeat
+            return handlerInput.responseBuilder.speak(sessionAtt.repeat).getResponse();
         } else {
             sessionAtt.repeat = handlerInput.responseBuilder.speak("There is nothing to repeat. I\'m sorry.").getResponse();
             handlerInput.attributesManager.setSessionAttributes(sessionAtt);
-            return sessionAtt.repeat
+            return handlerInput.responseBuilder.speak(sessionAtt.repeat).getResponse();
         }
     }
 }
