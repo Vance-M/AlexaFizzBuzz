@@ -23,11 +23,10 @@ const LaunchRequestHandler = {
             We take turns counting but with a couple extra rules. \
             Any number divisible by 3 is replaced by the word Fizz. \
             Any number divisible by 5 is replaced by the word Buzz. \
-            If a number is divisible both by 3 and by 5 then you replace is with FizzBuzz';
+            If a number is divisible both by 3 and by 5 then you replace it with FizzBuzz.';
         sessionAtt.count = count
         handlerInput.attributesManager.setSessionAttributes(sessionAtt);
-        return handlerInput.responseBuilder.speak(speakOutput + ' ' + 'I\'ll start' + ' ' + fizzBuzz(count).toString() ).reprompt(speakOutput + 'The count is' + fizzBuzz(count).toString()).getResponse();
-        
+        return handlerInput.responseBuilder.speak(speakOutput + ' ' + 'I\'ll start.' + ' ' + fizzBuzz(count).toString() ).reprompt(speakOutput + 'The count is' + fizzBuzz(count).toString()).getResponse();
     }
 };
 
