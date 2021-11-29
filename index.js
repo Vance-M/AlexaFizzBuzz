@@ -48,7 +48,7 @@ const GameIntentHandler = {
             const userString = Alexa.getSlotValue(handlerInput.requestEnvelope, 'fizzbuzz')
             console.log(userString)
             count++;
-            if((userNumber === fizzBuzz(count)) || userString == fizzBuzz(count)){
+            if((userNumber === fizzBuzz(count)) || userString === fizzBuzz(count)){
                 console.log(`~~~~ do you get here 2.0`);
                 count++;
                 sessionAtt.count = count
