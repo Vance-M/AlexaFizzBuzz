@@ -58,7 +58,7 @@ const GameIntentHandler = {
                 console.log(`~~~~ do you get here 3.0`);
                 sessionAtt.count = 1
                 handlerInput.attributesManager.setSessionAttributes(sessionAtt);
-                return handlerInput.responseBuilder.speak('I am sorry but the correct response was' + count).getResponse();
+                return handlerInput.responseBuilder.speak('I am sorry but the correct response was' + fizzBuzz(count)).getResponse();
             }
         }
 }
