@@ -64,11 +64,11 @@ const GameIntentHandler = {
 }
 
 const RepeatIntentHandler = {
-    canHandle(handleInput) {
+    canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.RepeatIntent';
     },
-    handle(handleInput) {
+    handle(handlerInput) {
         let sessionAtt = handlerInput.attributesManager.getSessionAttributes();
         if(sessionAtt.repeat != null){
             return handlerInput.responseBuilder.speak(sessionAtt.repeat).getResponse();
