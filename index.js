@@ -58,7 +58,7 @@ const GameIntentHandler = {
                 sessionAtt.count = count;
                 console.log(sessionAtt, 'session')
                 handlerInput.attributesManager.setSessionAttributes(sessionAtt);
-                return handlerInput.responseBuilder.speak(`${count}`).getResponse();
+                return handlerInput.responseBuilder.speak(`${count.toString()}`).getResponse();
             } else {
                 console.log(`~~~~ do you get here 3.0`);
                 sessionAtt.count = 1;
