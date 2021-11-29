@@ -32,21 +32,26 @@ const LaunchRequestHandler = {
 
 const GameIntentHandler = {
 	canHandle(handlerInput) {
+            console.log(`~~~~ do you get here the before times`);
 			return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
                 && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GameIntent';
         },
+        
 		handle(handlerInput) {
+            console.log(`~~~~ do you get here`);
             const sessionAtt = handlerInput.attributesManager.getSessionAttributes();
             const count = sessionAtt.count;
             const userNumber = parseInt(Alexa.getSlotValue(handlerInput.requestEnvelope, 'number'), 10)
             const userString = Alexa.getSlotValue(handlerInput.requestEnvelope, 'fizzbuzz')
             count++;
             if((userNumber === fizzBuzz(count)) || userString == fizzBuzz(count)){
+                console.log(`~~~~ do you get here 2.0`);
                 count++;
                 sessionAtt.count = count
                 handlerInput.attributesManager.setSessionAttributes(sessionAtt);
                 return handlerInput.responseBuilder.speak(count).reprompt(count).getResponse();
             } else {
+                console.log(`~~~~ do you get here 3.0`);
                 sessionAtt.count = 1
                 handlerInput.attributesManager.setSessionAttributes(sessionAtt);
                 return handlerInput.responseBuilder.speak('I am sorry but the correct response was' + count).getResponse();
