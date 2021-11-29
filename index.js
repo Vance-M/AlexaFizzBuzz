@@ -1,17 +1,17 @@
 const Alexa = require('ask-sdk-core');
 
-const handlers = require('./src/handlers');
+const Intenthandler = require('./src/handlers.js');
 
 
 exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
-        handlers.LaunchRequestHandler,
-        handlers.HelpIntentHandler,
-        handlers.CancelAndStopIntentHandler,
-        handlers.SessionEndedRequestHandler,
-        handlers.GameIntentHandler,
-        handlers.RepeatIntentHandler
+        Intenthandler.LaunchRequestHandler,
+        Intenthandler.HelpIntentHandler,
+        Intenthandler.CancelAndStopIntentHandler,
+        Intenthandler.SessionEndedRequestHandler,
+        Intenthandler.GameIntentHandler,
+        Intenthandler.RepeatIntentHandler
         )
-    .addErrorHandlers(
-        handlers.ErrorHandler)
+    .addErrorhandler(
+        Intenthandler.ErrorHandler)
     .lambda();
