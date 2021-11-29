@@ -24,48 +24,57 @@ const LaunchRequestHandler = {
             Any number divisible by 3 is replaced by the word Fizz. \
             Any number divisible by 5 is replaced by the word Buzz. \
             If a number is divisible both by 3 and by 5 then you replace it with FizzBuzz.';
+        let response = handlerInput.responseBuilder.speak(speakOutput + ' ' + 'I\'ll start.' + ' ' + fizzBuzz(count).toString() ).reprompt(speakOutput + 'The count is' + fizzBuzz(count).toString()).getResponse();
         sessionAtt.count = count
+        sessionAtt.repeat = response
         handlerInput.attributesManager.setSessionAttributes(sessionAtt);
-        return handlerInput.responseBuilder.speak(speakOutput + ' ' + 'I\'ll start.' + ' ' + fizzBuzz(count).toString() ).reprompt(speakOutput + 'The count is' + fizzBuzz(count).toString()).getResponse();
+        return response
     }
 };
 
 const GameIntentHandler = {
 	canHandle(handlerInput) {
-            console.log(`~~~~ do you get here the before times`);
 			return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
                 && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GameIntent';
         },
-        
-		handle(handlerInput) {
-            console.log(`~~~~ do you get here`);
-            let sessionAtt = handlerInput.attributesManager.getSessionAttributes();
-            console.log(sessionAtt, 'session')
-            let count = sessionAtt.count;
-            console.log(count, 'count')
-            const userNumber = parseInt(Alexa.getSlotValue(handlerInput.requestEnvelope, 'number'), 10)
-            console.log(userNumber, 'userNumber')
-            const userString = Alexa.getSlotValue(handlerInput.requestEnvelope, 'fizzbuzz')
-            console.log(userString, 'userString')
+	handle(handlerInput) {
+        let sessionAtt = handlerInput.attributesManager.getSessionAttributes();
+        let count = sessionAtt.count;
+        const userNumber = parseInt(Alexa.getSlotValue(handlerInput.requestEnvelope, 'number'), 10)
+        const userString = Alexa.getSlotValue(handlerInput.requestEnvelope, 'fizzbuzz')
+        count++;
+        if((userNumber === fizzBuzz(count)) || userString === fizzBuzz(count)){
             count++;
-            console.log(fizzBuzz(count), 'fizzbuzzcount')
-            console.log(userNumber === fizzBuzz(count), 'first if')
-            console.log(userString === fizzBuzz(count), 'second if')
-            if((userNumber === fizzBuzz(count)) || userString === fizzBuzz(count)){
-                console.log(`~~~~ do you get here 2.0`);
-                count++;
-                console.log(count, 'count');
-                sessionAtt.count = count;
-                console.log(sessionAtt, 'session')
-                handlerInput.attributesManager.setSessionAttributes(sessionAtt);
-                return handlerInput.responseBuilder.speak(fizzBuzz(count).toString()).reprompt(fizzBuzz(count).toString()).getResponse();
-            } else {
-                console.log(`~~~~ do you get here 3.0`);
-                sessionAtt.count = 1;
-                handlerInput.attributesManager.setSessionAttributes(sessionAtt);
-                return handlerInput.responseBuilder.speak('I am sorry but the correct response was ' + fizzBuzz(count).toString()).getResponse();
-            }
+            let response = handlerInput.responseBuilder.speak(fizzBuzz(count).toString()).reprompt(fizzBuzz(count).toString()).getResponse();
+            sessionAtt.count = count;
+            sessionAtt.repeat = response
+            handlerInput.attributesManager.setSessionAttributes(sessionAtt);
+            return response
+        } else {
+            let response = handlerInput.responseBuilder.speak('I am sorry but the correct response was ' + fizzBuzz(count).toString()).getResponse();
+            sessionAtt.count = 1;
+            sessionAtt.repeat = response            
+            handlerInput.attributesManager.setSessionAttributes(sessionAtt);
+            return response
         }
+    }
+}
+
+const RepeatIntentHandler = {
+    canHandle(handleInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.RepeatIntent';
+    },
+    handle(handleInput) {
+        let sessionAtt = handlerInput.attributesManager.getSessionAttributes();
+        if(sessionAtt.repeat != null){
+            return sessionAtt.repeat
+        } else {
+            sessionAtt.repeat = handlerInput.responseBuilder.speak("There is nothing to repeat. I\'m sorry.").getResponse();
+            handlerInput.attributesManager.setSessionAttributes(sessionAtt);
+            return sessionAtt.repeat
+        }
+    }
 }
 
 const HelpIntentHandler = {
@@ -119,7 +128,7 @@ const ErrorHandler = {
         return true;
     },
     handle(handlerInput, error) {
-        const speakOutput = 'Sorry, I had trouble doing what you asked. Please try again.';
+        const speakOutput = 'Sorry, there was an error. Please try again.';
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(speakOutput)
@@ -133,7 +142,8 @@ exports.handler = Alexa.SkillBuilders.custom()
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
-        GameIntentHandler
+        GameIntentHandler,
+        RepeatIntentHandler
         )
     .addErrorHandlers(
         ErrorHandler)
