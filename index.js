@@ -47,8 +47,11 @@ const GameIntentHandler = {
             count++;
             let response = handlerInput.responseBuilder.speak(fizzBuzz(count).toString()).reprompt(fizzBuzz(count).toString()).getResponse();
             sessionAtt.count = count;
+            console.log(sessionAtt, 'looking for count')
             sessionAtt.repeat = response
+            console.log(sessionAtt, 'looking for response')
             handlerInput.attributesManager.setSessionAttributes(sessionAtt);
+            console.log(sessionAtt, 'looking for testy')
             return response
         } else {
             let response = handlerInput.responseBuilder.speak('I am sorry but the correct response was ' + fizzBuzz(count).toString()).getResponse();
