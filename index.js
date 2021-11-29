@@ -39,18 +39,15 @@ const GameIntentHandler = {
             const sessionAtt = handlerInput.attributesManager.getSessionAttributes();
             const count = sessionAtt.count;
             const userNumber = parseInt(Alexa.getSlotValue(handlerInput.requestEnvelope, 'number'), 10)
-            const userString = Alexa.getSlotValue(handlerInput.requestEnvelope, 'answer')
+            const userString = Alexa.getSlotValue(handlerInput.requestEnvelope, 'fizzbuzz')
             count++;
-            console.log('pre if check', count)
             if((userNumber === fizzBuzz(count)) || (userString === fizzBuzz(count))){
                 count++;
-                console.log('success if check', count)
                 sessionAtt.count = count
                 handlerInput.attributesManager.setSessionAttributes(sessionAtt);
                 return handlerInput.responseBuilder.speak(count).reprompt(count).getResponse();
             } else {
-                console.log('success if check', count)
-                sessionAtt = null;
+                sessionAtt.count = 1
                 handlerInput.attributesManager.setSessionAttributes(sessionAtt);
                 return handlerInput.responseBuilder.speak('I am sorry but the correct response was' + count).getResponse();
             }
@@ -84,7 +81,7 @@ const CancelAndStopIntentHandler = {
     },
     handle(handlerInput) {
         const sessionAtt = handlerInput.attributesManager.getSessionAttributes();
-        sessionAtt = null; // Clear session
+        sessionAtt.count = 1; // Clear session
         handlerInput.attributesManager.setSessionAttributes(sessionAtt);
         return handlerInput.responseBuilder.speak('Goodbye!');
     }
@@ -97,7 +94,7 @@ const SessionEndedRequestHandler = {
     handle(handlerInput) {
         console.log(`~~~~ Session ended: ${JSON.stringify(handlerInput.requestEnvelope)}`);
         const sessionAtt = handlerInput.attributesManager.getSessionAttributes();
-        sessionAtt = null; // Clear session
+        sessionAtt.count = 1; // Clear session count
         handlerInput.attributesManager.setSessionAttributes(sessionAtt);
         return handlerInput.responseBuilder.speak('Goodbye!').getResponse();
     }
