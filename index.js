@@ -26,7 +26,7 @@ const LaunchRequestHandler = {
             If a number is divisible both by 3 and by 5 then you replace it with FizzBuzz.';
         let response = handlerInput.responseBuilder.speak(speakOutput + ' ' + 'I\'ll start.' + ' ' + fizzBuzz(count).toString() ).reprompt(speakOutput + 'The count is' + fizzBuzz(count).toString()).getResponse();
         sessionAtt.count = count
-        sessionAtt.repeat = response
+        sessionAtt.repeat = (speakOutput + ' ' + 'I\'ll start.' + ' ' + fizzBuzz(count).toString())
         handlerInput.attributesManager.setSessionAttributes(sessionAtt);
         return response
     }
@@ -48,15 +48,15 @@ const GameIntentHandler = {
             let response = handlerInput.responseBuilder.speak(fizzBuzz(count).toString()).reprompt(fizzBuzz(count).toString()).getResponse();
             sessionAtt.count = count;
             console.log(sessionAtt, 'looking for count')
-            sessionAtt.repeat = response
+            sessionAtt.repeat = fizzBuzz(count).toString()
             console.log(sessionAtt, 'looking for response')
             handlerInput.attributesManager.setSessionAttributes(sessionAtt);
             console.log(sessionAtt, 'looking for testy')
             return response
         } else {
             let response = handlerInput.responseBuilder.speak('I am sorry but the correct response was ' + fizzBuzz(count).toString()).getResponse();
+            sessionAtt.repeat = 'I am sorry but the correct response was ' + fizzBuzz(count).toString()         
             sessionAtt.count = 1;
-            sessionAtt.repeat = response            
             handlerInput.attributesManager.setSessionAttributes(sessionAtt);
             return response
         }
