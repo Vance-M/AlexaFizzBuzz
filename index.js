@@ -54,13 +54,14 @@ const GameIntentHandler = {
             if((userNumber === fizzBuzz(count)) || userString === fizzBuzz(count)){
                 console.log(`~~~~ do you get here 2.0`);
                 count++;
-                console.log(count, 'count')
-                sessionAtt.count = count
+                console.log(count, 'count');
+                sessionAtt.count = count;
+                console.log(sessionAtt, 'session')
                 handlerInput.attributesManager.setSessionAttributes(sessionAtt);
                 return handlerInput.responseBuilder.speak(count).reprompt(count).getResponse();
             } else {
                 console.log(`~~~~ do you get here 3.0`);
-                sessionAtt.count = 1
+                sessionAtt.count = 1;
                 handlerInput.attributesManager.setSessionAttributes(sessionAtt);
                 return handlerInput.responseBuilder.speak('I am sorry but the correct response was ' + fizzBuzz(count)).getResponse();
             }
