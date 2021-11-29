@@ -47,7 +47,7 @@ const GameIntentHandler = {
             console.log(userNumber, 'userNumber')
             const userString = Alexa.getSlotValue(handlerInput.requestEnvelope, 'fizzbuzz')
             console.log(userString, 'userString')
-            // count++;
+            count++;
             console.log(fizzBuzz(count), 'fizzbuzzcount')
             console.log(userNumber === fizzBuzz(count), 'first if')
             console.log(userString === fizzBuzz(count), 'second if')
