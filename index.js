@@ -30,6 +30,29 @@ const LaunchRequestHandler = {
     }
 };
 
+const GameIntentHandler = {
+	canHandle(handlerInput) {
+			return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+                && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GameIntent';
+        },
+		handle(handlerInput) {
+            const sessionAtt = handlerInput.attributesManager.getSessionAttributes();
+            const count = sessionAtt.count;
+            const userNumber = parseInt(Alexa.getSlotValue(handlerInput.requestEnvelope, 'number'), 10)
+            const userString = Alexa.getSlotValue(handlerInput.requestEnvelope, 'fizzbuzz')
+            count++;
+            if((userNumber === fizzBuzz(count)) || (userString === fizzBuzz(count))){
+                count++;
+                sessionAtt.count = count
+                handlerInput.attributesManager.setSessionAttributes(sessionAtt);
+                return handlerInput.responseBuilder.speak(count).reprompt(count).getResponse();
+            } else {
+                sessionAtt = null;
+                handlerInput.attributesManager.setSessionAttributes(sessionAtt);
+                return handlerInput.responseBuilder.speak('I am sorry but the correct response was' + count).getResponse();
+            }
+        }
+}
 
 const HelpIntentHandler = {
     canHandle(handlerInput) {
@@ -40,8 +63,8 @@ const HelpIntentHandler = {
         const speakOutput = 'This is Fizz Buzz! We take turns counting but with a couple extra rules. \
             Any number divisible by 3 is replaced by the word Fizz. \
             Any number divisible by 5 is replaced by the word Buzz. \
-            If a number is divisible both by 3 and by 5 then you replace is with FizzBuzz \
-            You can say quit to exit the game, repeat to repeat the last count, ';
+            If a number is divisible both by 3 and by 5 then you replace it with FizzBuzz. \
+            You can say quit to exit the game, and repeat to repeat the last count. ';
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
@@ -73,7 +96,7 @@ const SessionEndedRequestHandler = {
         const sessionAtt = handlerInput.attributesManager.getSessionAttributes();
         sessionAtt = null; // Clear session
         handlerInput.attributesManager.setSessionAttributes(sessionAtt);
-        return handlerInput.responseBuilder.speak('Goodbye!');
+        return handlerInput.responseBuilder.speak('Goodbye!').getResponse();
     }
 };
 
