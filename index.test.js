@@ -1,4 +1,4 @@
-import { fizzBuzz } from "./index.js"
+import { fizzBuzz } from "./src/utils.js"
 describe('Fizz Buzz Function', () => {
     it('responds with number', async() => {
         const count = 1
