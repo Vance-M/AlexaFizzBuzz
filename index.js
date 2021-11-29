@@ -26,7 +26,7 @@ const LaunchRequestHandler = {
             If a number is divisible both by 3 and by 5 then you replace is with FizzBuzz';
         sessionAtt.count = count
         handlerInput.attributesManager.setSessionAttributes(sessionAtt);
-        return handlerInput.responseBuilder.speak(speakOutput + 'I\'ll start.' + fizzBuzz(count).toString() ).reprompt(speakOutput + 'The count is' + fizzBuzz(count).toString();).getResponse();
+        return handlerInput.responseBuilder.speak(speakOutput + 'I\'ll start.' + fizzBuzz(count).toString() ).reprompt(speakOutput + 'The count is' + fizzBuzz(count).toString()).getResponse();
         
     }
 };
