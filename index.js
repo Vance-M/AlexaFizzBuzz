@@ -12,6 +12,6 @@ exports.handler = Alexa.SkillBuilders.custom()
         Intenthandler.GameIntentHandler,
         Intenthandler.RepeatIntentHandler
         )
-    .addErrorhandler(
+    .addErrorhandlers(
         Intenthandler.ErrorHandler)
     .lambda();
