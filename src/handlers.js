@@ -1,4 +1,4 @@
-import { fizzBuzz } from "./utils";
+const utils = require('./utils.js')
 const Alexa = require('ask-sdk-core');
 
 
@@ -14,9 +14,9 @@ const LaunchRequestHandler = {
             Any number divisible by 3 is replaced by the word Fizz. \
             Any number divisible by 5 is replaced by the word Buzz. \
             If a number is divisible both by 3 and by 5 then you replace it with FizzBuzz.';
-        let response = handlerInput.responseBuilder.speak(speakOutput + ' ' + 'I\'ll start.' + ' ' + fizzBuzz(count).toString() ).reprompt(speakOutput + 'The count is' + fizzBuzz(count).toString()).getResponse();
+        let response = handlerInput.responseBuilder.speak(speakOutput + ' ' + 'I\'ll start.' + ' ' + utils.fizzBuzz(count).toString() ).reprompt(speakOutput + 'The count is' + utils.fizzBuzz(count).toString()).getResponse();
         sessionAtt.count = count
-        sessionAtt.repeat = (speakOutput + ' ' + 'I\'ll start.' + ' ' + fizzBuzz(count).toString())
+        sessionAtt.repeat = (speakOutput + ' ' + 'I\'ll start.' + ' ' + utils.fizzBuzz(count).toString())
         handlerInput.attributesManager.setSessionAttributes(sessionAtt);
         return response
     }
@@ -33,16 +33,16 @@ const GameIntentHandler = {
         const userNumber = parseInt(Alexa.getSlotValue(handlerInput.requestEnvelope, 'number'), 10)
         const userString = Alexa.getSlotValue(handlerInput.requestEnvelope, 'fizzbuzz')
         count++;
-        if((userNumber === fizzBuzz(count)) || userString === fizzBuzz(count)){
+        if((userNumber === utils.fizzBuzz(count)) || userString === utils.fizzBuzz(count)){
             count++;
-            let response = handlerInput.responseBuilder.speak(fizzBuzz(count).toString()).reprompt(fizzBuzz(count).toString()).getResponse();
+            let response = handlerInput.responseBuilder.speak(utils.fizzBuzz(count).toString()).reprompt(utils.fizzBuzz(count).toString()).getResponse();
             sessionAtt.count = count;
-            sessionAtt.repeat = fizzBuzz(count).toString()
+            sessionAtt.repeat = utils.fizzBuzz(count).toString()
             handlerInput.attributesManager.setSessionAttributes(sessionAtt);
             return response
         } else {
-            let response = handlerInput.responseBuilder.speak('I am sorry but the correct response was ' + fizzBuzz(count).toString()).getResponse();
-            sessionAtt.repeat = 'I am sorry but the correct response was ' + fizzBuzz(count).toString()         
+            let response = handlerInput.responseBuilder.speak('I am sorry but the correct response was ' + utils.fizzBuzz(count).toString()).getResponse();
+            sessionAtt.repeat = 'I am sorry but the correct response was ' + utils.fizzBuzz(count).toString()         
             sessionAtt.count = 1;
             handlerInput.attributesManager.setSessionAttributes(sessionAtt);
             return response
